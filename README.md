@@ -157,12 +157,3 @@ Built for **HackMTY 2025** | Powered by **Streamlit** & **scikit-learn**
 
 **Contact**: ismael.alvrdz@hotmail.com | [[LinkedIn]](https://www.linkedin.com/in/ismael-alvarez-rodriguez-963096318)
 
-
-# Save to file
-with open("README.md", "w", encoding="utf-8") as f:
-    f.write(readme_content)
-
-print("✅ README.md created successfully!")
-print("📋 Copy the content above or run this script to generate the file.")
-```
-
