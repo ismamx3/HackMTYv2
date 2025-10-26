@@ -1,5 +1,4 @@
 
-readme_content = """
 # ✈️ NEXUS - Intelligent Catering Optimization Platform
 
 ![Python](https://img.shields.io/badge/Python-3.8+-FFD700?style=flat-square&logo=python)
