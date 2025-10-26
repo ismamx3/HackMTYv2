@@ -147,12 +147,6 @@ TROLLEY_CAPACITY_KG = 80.0
 
 ---
 
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) for details
-
----
-
 ## 🙏 Acknowledgments
 
 Built for **HackMTY 2025** | Powered by **Streamlit** & **scikit-learn**
@@ -161,7 +155,7 @@ Built for **HackMTY 2025** | Powered by **Streamlit** & **scikit-learn**
 
 ⭐ **Star this repo if you find it useful!**
 
-**Contact**: [Your Email] | [LinkedIn Profile]
+**Contact**: ismael.alvrdz@hotmail.com | [[LinkedIn Profile]](https://www.linkedin.com/in/ismael-alvarez-rodriguez-963096318)
 """
 
 # Save to file
