@@ -1,7 +1,3 @@
-```python
-"""
-README.md content - Copy and paste this into your GitHub repository
-"""
 
 readme_content = """
 # ✈️ NEXUS - Intelligent Catering Optimization Platform
