@@ -9,17 +9,17 @@
 
 ---
 
-## 🎯 What is NEXUS?
+## What is NEXUS?
 
 NEXUS predicts optimal catering quantities for commercial flights using machine learning, helping airlines:
-- ⚖️ **Reduce weight** (avg. 21kg per flight)
-- ⛽ **Save fuel** (3% weight-to-fuel conversion)
-- 💰 **Cut costs** ($0.51 per flight average)
-- 🌱 **Minimize waste** (optimize inventory)
+- **Reduce weight** (avg. 21kg per flight)
+- **Save fuel** (3% weight-to-fuel conversion)
+- **Cut costs** ($0.51 per flight average)
+- **Minimize waste** (optimize inventory)
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 ```bash
@@ -45,18 +45,18 @@ joblib>=1.3.0
 
 ---
 
-## 📊 Features
+## Features
 
-✨ **AI Predictions** - Random Forest model trained on historical flight data  
-🎛️ **Interactive Controls** - Adjust passengers, safety buffer, and view real-time updates  
-📈 **Visual Analytics** - Charts comparing standard vs. optimal quantities  
-💡 **Impact Metrics** - Weight, fuel, and cost savings dashboard  
-🧳 **Trolley Optimizer** - Auto-calculate required trolleys (80kg capacity)  
-📥 **CSV Export** - Download packing checklist for ground crews  
+**AI Predictions** - Random Forest model trained on historical flight data  
+**Interactive Controls** - Adjust passengers, safety buffer, and view real-time updates  
+**Visual Analytics** - Charts comparing standard vs. optimal quantities  
+**Impact Metrics** - Weight, fuel, and cost savings dashboard  
+**Trolley Optimizer** - Auto-calculate required trolleys (80kg capacity)  
+**CSV Export** - Download packing checklist for ground crews  
 
 ---
 
-## 🤖 Machine Learning Model
+## Machine Learning Model
 
 **Algorithm**: Random Forest Regressor  
 **Features**: 14 engineered features including passenger count, flight type, service class, temporal patterns  
@@ -71,7 +71,7 @@ joblib>=1.3.0
 
 ---
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 nexus-catering-optimization/
@@ -85,7 +85,7 @@ nexus-catering-optimization/
 
 ---
 
-## 💻 Usage
+## Usage
 
 1. **Select Flight** - Choose from dropdown in sidebar
 2. **Adjust Parameters**:
@@ -96,7 +96,7 @@ nexus-catering-optimization/
 
 ---
 
-## 📈 Sample Impact
+## Sample Impact
 
 **Example Flight (150 passengers)**:
 - Weight Saved: `21.19 kg`
@@ -107,7 +107,7 @@ nexus-catering-optimization/
 
 ---
 
-## 🎨 Product Weights
+## Product Weights
 
 ```python
 PRODUCT_WEIGHTS = {
@@ -126,7 +126,7 @@ PRODUCT_WEIGHTS = {
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 Update paths in `app.py`:
 ```python
@@ -137,7 +137,7 @@ TROLLEY_CAPACITY_KG = 80.0
 
 ---
 
-## 🚧 Future Enhancements
+## Future Enhancements
 
 - [ ] Multi-flight batch processing
 - [ ] Weather-adjusted predictions
@@ -147,13 +147,13 @@ TROLLEY_CAPACITY_KG = 80.0
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Built for **HackMTY 2025** | Powered by **Streamlit** & **scikit-learn**
 
 ---
 
-⭐ **Star this repo if you find it useful!**
+**Star this repo if you find it useful!**
 
 **Contact**: ismael.alvrdz@hotmail.com | [[LinkedIn]](https://www.linkedin.com/in/ismael-alvarez-rodriguez-963096318)
 
