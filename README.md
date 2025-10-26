@@ -1,4 +1,4 @@
-# NEXUS - Intelligent Catering Optimization Platform
+#      NEXUS - Intelligent Catering Optimization Platform
 
 <div align="center">
 
