@@ -166,18 +166,3 @@ print("✅ README.md created successfully!")
 print("📋 Copy the content above or run this script to generate the file.")
 ```
 
----
-
-### 📝 Instrucciones de Uso
-
-**Opción 1 - Copiar y pegar**:
-1. Copia todo el contenido entre las comillas triples `"""`
-2. Crea un archivo `README.md` en tu repo
-3. Pégalo
-
-**Opción 2 - Ejecutar script**:
-```bash
-python generate_readme.py
-```
-
-Esto generará automáticamente el archivo `README.md` en tu directorio.
