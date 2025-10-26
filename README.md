@@ -155,8 +155,8 @@ Built for **HackMTY 2025** | Powered by **Streamlit** & **scikit-learn**
 
 ⭐ **Star this repo if you find it useful!**
 
-**Contact**: ismael.alvrdz@hotmail.com | [[LinkedIn Profile]](https://www.linkedin.com/in/ismael-alvarez-rodriguez-963096318)
-"""
+**Contact**: ismael.alvrdz@hotmail.com | [[LinkedIn]](https://www.linkedin.com/in/ismael-alvarez-rodriguez-963096318)
+
 
 # Save to file
 with open("README.md", "w", encoding="utf-8") as f:
