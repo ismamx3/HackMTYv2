@@ -135,17 +135,6 @@ MODEL_PATH = "modelo_consumo.pkl"
 TROLLEY_CAPACITY_KG = 80.0
 ```
 
----
-
-## Future Enhancements
-
-- [ ] Multi-flight batch processing
-- [ ] Weather-adjusted predictions
-- [ ] Mobile app for ground crews
-- [ ] API integration with airline systems
-- [ ] CO2 emissions tracking
-
----
 
 ## Acknowledgments
 
