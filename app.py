@@ -18,7 +18,6 @@ import plotly.graph_objects as go
 # --------------------------------------------------------------
 st.set_page_config(
     page_title="NEXUS - Intelligent Catering Optimization",
-    page_icon="✈️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -28,148 +27,69 @@ st.set_page_config(
 # --------------------------------------------------------------
 st.markdown("""
 <style>
-    /* Tema general */
-    .main {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    }
-    
-    /* Header principal */
-    .main-header {
-        background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-    
-    .main-header h1 {
-        color: #FFD700;
-        font-size: 3rem;
-        font-weight: 800;
-        margin: 0;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    
-    .main-header p {
-        color: #E0E0E0;
-        font-size: 1.1rem;
-        margin-top: 0.5rem;
-    }
-    
-    /* Contenedores de sección */
-    .section-container {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin-bottom: 1.5rem;
-        border-left: 5px solid #2a5298;
-    }
-    
-    /* Métricas personalizadas */
-    .custom-metric {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1.5rem;
-        border-radius: 10px;
-        text-align: center;
-        color: white;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        transition: transform 0.2s;
-    }
-    
-    .custom-metric:hover {
-        transform: translateY(-5px);
-    }
-    
-    .custom-metric-value {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin: 0.5rem 0;
-    }
-    
-    .custom-metric-label {
-        font-size: 0.9rem;
-        opacity: 0.9;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
-    }
-    
-    [data-testid="stSidebar"] * {
-        color: white !important;
-    }
-    
-    /* Botones */
-    .stButton>button {
-        background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
-        color: #1e3c72;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        padding: 0.5rem 2rem;
-        transition: all 0.3s;
-    }
-    
-    .stButton>button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px rgba(255,215,0,0.4);
-    }
-    
-    /* Tabs */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        background-color: #e8eaf6;
-        border-radius: 8px 8px 0 0;
-        padding: 10px 20px;
-        color: #1e3c72;
-        font-weight: 600;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
-        color: white !important;
-    }
-    
-    /* DataFrames */
-    .dataframe {
-        border-radius: 8px;
-        overflow: hidden;
-    }
-    
-    /* Progress bars */
-    .stProgress > div > div {
-        background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
-    }
-    
-    /* Info boxes */
-    .icon-box {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 50%;
-        font-size: 1.5rem;
-        margin-right: 1rem;
-    }
+:root {
+  --prim:#1e3c72; --prim-2:#2a5298; --acc:#FFD700;
+  --bg:#f6f8fb; --card:#ffffff; --text:#1b1f24; --muted:#6b7280;
+  --radius:12px; --shadow:0 6px 12px rgba(0,0,0,.08);
+}
+/* Fondo */
+.main { background: linear-gradient(135deg, var(--bg) 0%, #e9eef7 100%); }
+/* Header */
+.main-header { background: linear-gradient(90deg, var(--prim), var(--prim-2)); 
+  padding: 1.75rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+.main-header h1 { color: var(--acc); font-size: 2.6rem; font-weight:700; margin:0; }
+.main-header p { color: #e7eaf3; font-size:1.1rem; margin:.4rem 0 0; }
+/* Secciones */
+.section-container { 
+  background: transparent;
+  padding:1.25rem; 
+  border-radius:var(--radius);
+  box-shadow: none;
+  margin-bottom:1rem; 
+  border-left: none;
+}
+/* Cards KPI */
+.kpi { text-align:center; color:#fff; border-radius:var(--radius);
+  padding:1.25rem; box-shadow:var(--shadow); }
+.kpi--1{ background: linear-gradient(135deg, #4158D0 0%, #1e3c72 100%); }
+.kpi--2{ background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+.kpi--3{ background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%); }
+/* Botón primario */
+.stButton > button { background: linear-gradient(90deg, var(--acc), #ffc933);
+  color: var(--prim); font-weight:700; border:0; border-radius:10px; padding:.6rem 1.2rem; }
+.stButton > button:hover { transform: translateY(-1px); box-shadow: 0 8px 16px rgba(255,215,0,.3); }
+/* Tabs */
+.stTabs [data-baseweb="tab"] { background:#eef2ff; border-radius:8px 8px 0 0; padding:10px 16px; color:var(--prim); font-weight:600; }
+.stTabs [aria-selected="true"] { background: linear-gradient(90deg, var(--prim), var(--prim-2)); color:#fff !important; }
+/* Sidebar */
+[data-testid="stSidebar"] { 
+  background: linear-gradient(180deg, var(--prim), var(--prim-2)); 
+}
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] .stMarkdown {
+  color: #fff !important;
+}
+/* Asegurar que los inputs del sidebar sean legibles */
+[data-testid="stSidebar"] input,
+[data-testid="stSidebar"] select,
+[data-testid="stSidebar"] .stSelectbox label {
+  color: #1b1f24 !important;
+  background-color: #ffffff !important;
+}
 </style>
 """, unsafe_allow_html=True)
+
 
 # --------------------------------------------------------------
 # HEADER PRINCIPAL
 # --------------------------------------------------------------
 st.markdown("""
 <div class="main-header">
-    <h1>✈️ NEXUS</h1>
+    <h1>NEXUS</h1>
     <p>Intelligent Catering Optimization Platform</p>
     <p style="font-size: 0.9rem; opacity: 0.8;">Advanced predictive analytics for Gategroup flight operations</p>
 </div>
@@ -178,7 +98,7 @@ st.markdown("""
 # --------------------------------------------------------------
 # RUTAS LOCALES
 # --------------------------------------------------------------
-CSV_PATH = "/Users/ismael/Downloads/[HackMTY2025]_ConsumptionPrediction_Dataset_v1.csv"
+CSV_PATH = "C:/Users/ismae/Downloads/[HackMTY2025]_ConsumptionPrediction_Dataset_v1.csv"
 MODEL_PATH = "modelo_consumo.pkl"
 
 # --------------------------------------------------------------
@@ -214,7 +134,7 @@ TROLLEY_CAPACITY_KG = 80.0
 TROLLEY_EMPTY_WEIGHT_KG = 14.0
 
 # --------------------------------------------------------------
-# FUNCIONES DE CARGA (sin cambios)
+# FUNCIONES DE CARGA
 # --------------------------------------------------------------
 @st.cache_resource(show_spinner=True)
 def load_model(path: str = MODEL_PATH) -> Tuple[Optional[Any], Optional[str], Optional[List[str]]]:
@@ -258,7 +178,7 @@ def load_dataset(path: str = CSV_PATH) -> pd.DataFrame:
         st.stop()
 
 # --------------------------------------------------------------
-# FUNCIONES DE PREPROCESAMIENTO (sin cambios)
+# FUNCIONES DE PREPROCESAMIENTO
 # --------------------------------------------------------------
 def preprocess_base(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
@@ -379,8 +299,6 @@ def calcular_trolleys(work: pd.DataFrame, capacidad_kg: float = TROLLEY_CAPACITY
 # SIDEBAR MEJORADO
 # --------------------------------------------------------------
 with st.sidebar:
-    st.markdown("### 🎛️ Control Panel")
-    st.markdown("---")
     
     with st.spinner("🔄 Loading AI model..."):
         model, model_err, feature_cols_from_pkl = load_model(MODEL_PATH)
@@ -388,8 +306,8 @@ with st.sidebar:
     if model_err:
         st.error(f"❌ {model_err}")
         st.stop()
-    else:
-        st.success("✅ Model loaded successfully")
+#    else:
+#        st.success("✅ Model loaded successfully")
 
     if feature_cols_from_pkl:
         FEATURE_COLS = feature_cols_from_pkl
@@ -403,7 +321,7 @@ with st.sidebar:
         st.error("❌ El CSV no contiene la columna 'Flight_ID'.")
         st.stop()
 
-    st.markdown("### ✈️ Flight Selection")
+    st.markdown("### Flight Selection")
     flight_options = df_enc["Flight_ID"].astype(str).sort_values().unique().tolist()
     selected_flight = st.selectbox(
         "Choose Flight ID",
@@ -412,7 +330,7 @@ with st.sidebar:
     )
 
     st.markdown("---")
-    st.markdown("### ⚙️ Optimization Parameters")
+    st.markdown("### Optimization Parameters")
     
     buffer_pct_ui = st.slider(
         "Safety Buffer (%)",
@@ -421,14 +339,78 @@ with st.sidebar:
     )
     buffer_fraction = buffer_pct_ui / 100.0
     
+    # ⭐ NUEVA SECCIÓN: Ajuste de Pasajeros ⭐
     st.markdown("---")
-    st.markdown("### 📊 System Info")
+    st.markdown("### Passenger Adjustment")
+    
+    # Obtener datos del vuelo seleccionado para mostrar pasajeros originales
+    df_flight_original = df_enc[df_enc["Flight_ID"].astype(str) == str(selected_flight)].copy()
+    
+    if not df_flight_original.empty:
+        original_passenger_count = int(df_flight_original.iloc[0]['Passenger_Count'])
+        
+        adjusted_passenger_count = st.number_input(
+            "Modify Passenger Count",
+            min_value=1,
+            max_value=500,
+            value=original_passenger_count,
+            step=1,
+            help="Adjust passenger count to simulate different load scenarios",
+            label_visibility="collapsed"
+        )
+        
+        # Indicador visual de cambio
+        if adjusted_passenger_count != original_passenger_count:
+            delta = adjusted_passenger_count - original_passenger_count
+            delta_pct = (delta / original_passenger_count * 100)
+            st.markdown(f"""
+            <div style="background: rgba(255, 215, 0, 0.2); padding: 0.5rem; border-radius: 8px; border-left: 4px solid #FFD700;">
+                <strong>Simulation Active</strong><br/>
+                Original: {original_passenger_count}<br/>
+                Adjusted: {adjusted_passenger_count}<br/>
+                Change: {delta:+d} ({delta_pct:+.1f}%)
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div style="background: rgba(67, 233, 123, 0.2); padding: 0.5rem; border-radius: 8px; border-left: 4px solid #43e97b;">
+                <strong>Using Original Data</strong><br/>
+                Passengers: {original_passenger_count}
+            </div>
+            """, unsafe_allow_html=True)
+    else:
+        original_passenger_count = 0
+        adjusted_passenger_count = 0
+    
+    st.markdown("---")
+    st.markdown("### System Info")
     st.info(f"**Database:** {len(df_enc)} records\n\n**Flights:** {len(flight_options)}")
 
 # --------------------------------------------------------------
 # CONTENIDO PRINCIPAL
 # --------------------------------------------------------------
-df_flight = df_enc[df_enc["Flight_ID"].astype(str) == str(selected_flight)].copy()
+
+# ⭐ APLICAR AJUSTE DE PASAJEROS ANTES DE FILTRAR ⭐
+df_enc_adjusted = df_enc.copy()
+
+# Verificar que tengamos un vuelo válido
+df_flight_check = df_enc[df_enc["Flight_ID"].astype(str) == str(selected_flight)].copy()
+
+if not df_flight_check.empty:
+    # Si hay ajuste de pasajeros, aplicarlo al dataset
+    if adjusted_passenger_count != original_passenger_count:
+        # Modificar solo las filas del vuelo seleccionado
+        mask = df_enc_adjusted["Flight_ID"].astype(str) == str(selected_flight)
+        df_enc_adjusted.loc[mask, 'Passenger_Count'] = adjusted_passenger_count
+        
+        # Recalcular Qty_Per_Passenger con el nuevo valor
+        df_enc_adjusted.loc[mask, 'Qty_Per_Passenger'] = (
+            df_enc_adjusted.loc[mask, 'Standard_Specification_Qty'].fillna(0)
+            .div(adjusted_passenger_count)
+        )
+
+# Ahora sí filtrar el vuelo con los datos ajustados
+df_flight = df_enc_adjusted[df_enc_adjusted["Flight_ID"].astype(str) == str(selected_flight)].copy()
 
 if df_flight.empty:
     st.warning("⚠️ No se encontraron filas para el vuelo seleccionado.")
@@ -438,17 +420,25 @@ if df_flight.empty:
 # CONTEXTO DEL VUELO CON DISEÑO MEJORADO
 # --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
-st.markdown("## 📋 Flight Context & Details")
+st.markdown("## Flight Context & Details")
 
 row0 = df_flight.iloc[0]
 
 col1, col2, col3, col4, col5 = st.columns(5)
 
+# Estilo uniforme azul marino para todas las tarjetas
+card_style = """
+    text-align: center; 
+    padding: 1rem; 
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+    border-radius: 10px; 
+    color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+"""
+
 with col1:
     st.markdown(f"""
-    <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                border-radius: 10px; color: white;">
-        <div style="font-size: 2rem;">🌍</div>
+    <div style="{card_style}">
         <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">{row0.get('Origin', 'N/A')}</div>
         <div style="font-size: 0.8rem; opacity: 0.9;">ORIGIN</div>
     </div>
@@ -456,9 +446,7 @@ with col1:
 
 with col2:
     st.markdown(f"""
-    <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
-                border-radius: 10px; color: white;">
-        <div style="font-size: 2rem;">✈️</div>
+    <div style="{card_style}">
         <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">{row0.get('Flight_Type', 'N/A')}</div>
         <div style="font-size: 0.8rem; opacity: 0.9;">FLIGHT TYPE</div>
     </div>
@@ -466,29 +454,31 @@ with col2:
 
 with col3:
     st.markdown(f"""
-    <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
-                border-radius: 10px; color: white;">
-        <div style="font-size: 2rem;">🍽️</div>
+    <div style="{card_style}">
         <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">{row0.get('Service_Type', 'N/A')}</div>
         <div style="font-size: 0.8rem; opacity: 0.9;">SERVICE</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col4:
+    # Mostrar pasajeros con indicador visual si fue modificado
+    passenger_display = int(row0.get('Passenger_Count', 0))
+    is_modified = adjusted_passenger_count != original_passenger_count
+    
+    # Cambiar color si está modificado
+    card_style_pax = card_style.replace('#1e3c72 0%, #2a5298 100%', 
+                                        '#FFD700 0%, #FFA500 100%' if is_modified else '#1e3c72 0%, #2a5298 100%')
+    
     st.markdown(f"""
-    <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); 
-                border-radius: 10px; color: white;">
-        <div style="font-size: 2rem;">👥</div>
-        <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">{int(row0.get('Passenger_Count', 0))}</div>
-        <div style="font-size: 0.8rem; opacity: 0.9;">PASSENGERS</div>
+    <div style="{card_style_pax}">
+        <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">{passenger_display}</div>
+        <div style="font-size: 0.8rem; opacity: 0.9;">PASSENGERS {'(ADJUSTED)' if is_modified else ''}</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col5:
     st.markdown(f"""
-    <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); 
-                border-radius: 10px; color: white;">
-        <div style="font-size: 2rem;">📅</div>
+    <div style="{card_style}">
         <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">{str(row0.get('Date'))[:10]}</div>
         <div style="font-size: 0.8rem; opacity: 0.9;">DATE</div>
     </div>
@@ -500,11 +490,11 @@ st.markdown('</div>', unsafe_allow_html=True)
 # PREDICCIÓN CON TABS
 # --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
-st.markdown("## 🔮 AI-Powered Consumption Prediction")
+st.markdown("## AI-Powered Consumption Prediction")
 
 work = compute_recommendations(df_flight, model, buffer_fraction, FEATURE_COLS)
 
-tab1, tab2, tab3 = st.tabs(["📊 Prediction Table", "📈 Visual Analysis", "🔍 Details"])
+tab1, tab2, tab3 = st.tabs(["Prediction Table", "Visual Analysis", "Details"])
 
 with tab1:
     visible_cols = [
@@ -553,7 +543,8 @@ with tab3:
     **Model Confidence:** High  
     **Buffer Applied:** {buffer_pct_ui}%  
     **Products Analyzed:** {len(work)}  
-    **Prediction Algorithm:** Random Forest Regression
+    **Prediction Algorithm:** Random Forest Regression  
+    **Passenger Count:** {adjusted_passenger_count} {'(Adjusted from ' + str(original_passenger_count) + ')' if adjusted_passenger_count != original_passenger_count else '(Original)'}
     """)
 
 st.markdown('</div>', unsafe_allow_html=True)
@@ -568,10 +559,19 @@ peso_total_ahorrado, combustible_ahorrado, ahorro_dinero = summarize_impacts(wor
 
 col1, col2, col3, col4 = st.columns(4)
 
+# Estilo uniforme azul marino para KPIs
+kpi_style = """
+    text-align: center; 
+    padding: 1.5rem; 
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+    border-radius: 10px; 
+    color: white; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+"""
+
 with col1:
     st.markdown(f"""
-    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                border-radius: 10px; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+    <div style="{kpi_style}">
         <div style="font-size: 2.5rem;">⚖️</div>
         <div style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;">{peso_total_ahorrado:.2f}</div>
         <div style="font-size: 0.85rem; opacity: 0.9; text-transform: uppercase;">kg Weight Saved</div>
@@ -580,8 +580,7 @@ with col1:
 
 with col2:
     st.markdown(f"""
-    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
-                border-radius: 10px; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+    <div style="{kpi_style}">
         <div style="font-size: 2.5rem;">⛽</div>
         <div style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;">{combustible_ahorrado:.2f}</div>
         <div style="font-size: 0.85rem; opacity: 0.9; text-transform: uppercase;">kg Fuel Saved</div>
@@ -590,8 +589,7 @@ with col2:
 
 with col3:
     st.markdown(f"""
-    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); 
-                border-radius: 10px; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+    <div style="{kpi_style}">
         <div style="font-size: 2.5rem;">💰</div>
         <div style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;">${ahorro_dinero:.2f}</div>
         <div style="font-size: 0.85rem; opacity: 0.9; text-transform: uppercase;">USD Cost Savings</div>
@@ -601,8 +599,7 @@ with col3:
 with col4:
     reduction_pct = (peso_total_ahorrado / work["Peso_Actual_kg"].sum() * 100) if work["Peso_Actual_kg"].sum() > 0 else 0
     st.markdown(f"""
-    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); 
-                border-radius: 10px; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+    <div style="{kpi_style}">
         <div style="font-size: 2.5rem;">📊</div>
         <div style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;">{reduction_pct:.1f}%</div>
         <div style="font-size: 0.85rem; opacity: 0.9; text-transform: uppercase;">Weight Reduction</div>
@@ -610,7 +607,7 @@ with col4:
     """, unsafe_allow_html=True)
 
 # Gráfico de distribución de peso
-st.markdown("### 📦 Weight Distribution by Product")
+st.markdown("### Weight Distribution by Product")
 weight_dist = work[["Product_Name", "Peso_Optimo_kg"]].copy()
 weight_dist = weight_dist[weight_dist["Peso_Optimo_kg"] > 0]
 
@@ -635,7 +632,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 # TROLLEYS CON VISUALIZACIÓN MEJORADA
 # --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
-st.markdown("## 🧳 Trolley Configuration & Loading Plan")
+st.markdown("## Trolley Configuration & Loading Plan")
 
 num_trolleys, pct_ultimo = calcular_trolleys(work, TROLLEY_CAPACITY_KG)
 peso_optimo_total = work["Peso_Optimo_kg"].sum()
@@ -695,7 +692,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 # CHECKLIST + EXPORT MEJORADO
 # --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
-st.markdown("## ✅ Packing Checklist & Export")
+st.markdown("## Packing Checklist & Export")
 
 checklist_df = work[["Flight_ID", "Product_Name", "Optimal_Specification"]].copy().sort_values("Product_Name")
 
@@ -715,10 +712,12 @@ else:
             """, unsafe_allow_html=True)
     
     with col2:
+        # Nombre de archivo con indicador de ajuste
+        filename_suffix = f"_{adjusted_passenger_count}pax" if adjusted_passenger_count != original_passenger_count else ""
         st.download_button(
             label="💾 Export CSV",
             data=checklist_df.to_csv(index=False).encode("utf-8"),
-            file_name=f"nexus_packing_recommendation_{selected_flight}.csv",
+            file_name=f"nexus_packing_{selected_flight}{filename_suffix}.csv",
             mime="text/csv",
             use_container_width=True
         )
