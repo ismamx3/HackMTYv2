@@ -1,4 +1,4 @@
-# NEXUS - Recomendación de carga de catering por vuelo (MVP Streamlit)
+# NEXUS - Recomendación de carga de catering por vuelo!
 
 import streamlit as st
 import pandas as pd
