@@ -1,6 +1,6 @@
 
 # NEXUS - Intelligent Catering Optimization Platform
-
+ 
 ![Python](https://img.shields.io/badge/Python-3.8+-FFD700?style=flat-square&logo=python)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-1e3c72?style=flat-square&logo=streamlit)
 ![ML](https://img.shields.io/badge/ML-Random%20Forest-2a5298?style=flat-square)
