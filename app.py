@@ -1,4 +1,7 @@
-# NEXUS - Recomendación de carga de catering por vuelo!
+# app.py
+# NEXUS - Recomendación de carga de catering por vuelo (MVP Streamlit)
+# --------------------------------------------------------------
+# Versión mejorada con diseño visual moderno tipo dashboard aeronáutico
 
 import streamlit as st
 import pandas as pd
@@ -10,14 +13,18 @@ from typing import Optional, Tuple, List, Any
 import plotly.express as px
 import plotly.graph_objects as go
 
+# --------------------------------------------------------------
 # CONFIGURACIÓN DE PÁGINA
+# --------------------------------------------------------------
 st.set_page_config(
     page_title="NEXUS - Intelligent Catering Optimization",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# --------------------------------------------------------------
 # CSS PERSONALIZADO PARA DISEÑO MODERNO
+# --------------------------------------------------------------
 st.markdown("""
 <style>
 :root {
@@ -77,7 +84,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+# --------------------------------------------------------------
 # HEADER PRINCIPAL
+# --------------------------------------------------------------
 st.markdown("""
 <div class="main-header">
     <h1>NEXUS</h1>
@@ -86,11 +95,15 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# --------------------------------------------------------------
 # RUTAS LOCALES
+# --------------------------------------------------------------
 CSV_PATH = "C:/Users/ismae/Downloads/[HackMTY2025]_ConsumptionPrediction_Dataset_v1.csv"
 MODEL_PATH = "modelo_consumo.pkl"
 
+# --------------------------------------------------------------
 # ESPECIFICACIONES
+# --------------------------------------------------------------
 NUMERIC_COLS = [
     "Passenger_Count", "Standard_Specification_Qty",
     "Quantity_Consumed", "Quantity_Returned", "Unit_Cost"
@@ -120,7 +133,9 @@ PRODUCT_WEIGHTS = {
 TROLLEY_CAPACITY_KG = 80.0
 TROLLEY_EMPTY_WEIGHT_KG = 14.0
 
+# --------------------------------------------------------------
 # FUNCIONES DE CARGA
+# --------------------------------------------------------------
 @st.cache_resource(show_spinner=True)
 def load_model(path: str = MODEL_PATH) -> Tuple[Optional[Any], Optional[str], Optional[List[str]]]:
     try:
@@ -162,7 +177,9 @@ def load_dataset(path: str = CSV_PATH) -> pd.DataFrame:
         st.error(f"No se pudo cargar el CSV local: {e}")
         st.stop()
 
+# --------------------------------------------------------------
 # FUNCIONES DE PREPROCESAMIENTO
+# --------------------------------------------------------------
 def preprocess_base(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
@@ -278,26 +295,30 @@ def calcular_trolleys(work: pd.DataFrame, capacidad_kg: float = TROLLEY_CAPACITY
     pct_ultimo = (peso_restante / capacidad_kg * 100) if peso_restante > 0 else 100.0
     return num_trolleys, pct_ultimo
 
+# --------------------------------------------------------------
 # SIDEBAR MEJORADO
+# --------------------------------------------------------------
 with st.sidebar:
     
-    with st.spinner("Loading AI model..."):
+    with st.spinner("🔄 Loading AI model..."):
         model, model_err, feature_cols_from_pkl = load_model(MODEL_PATH)
     
     if model_err:
-        st.error(f"Error {model_err}")
+        st.error(f"❌ {model_err}")
         st.stop()
+#    else:
+#        st.success("✅ Model loaded successfully")
 
     if feature_cols_from_pkl:
         FEATURE_COLS = feature_cols_from_pkl
 
-    with st.spinner("Loading flight database..."):
+    with st.spinner("📊 Loading flight database..."):
         df_raw = load_dataset(CSV_PATH)
         df_base = preprocess_base(df_raw)
         df_enc, _ = fit_and_apply_encoders(df_base)
 
     if "Flight_ID" not in df_enc.columns:
-        st.error("Error. El CSV no contiene la columna 'Flight_ID'.")
+        st.error("❌ El CSV no contiene la columna 'Flight_ID'.")
         st.stop()
 
     st.markdown("### Flight Selection")
@@ -318,9 +339,11 @@ with st.sidebar:
     )
     buffer_fraction = buffer_pct_ui / 100.0
     
+    # ⭐ NUEVA SECCIÓN: Ajuste de Pasajeros ⭐
     st.markdown("---")
     st.markdown("### Passenger Adjustment")
     
+    # Obtener datos del vuelo seleccionado para mostrar pasajeros originales
     df_flight_original = df_enc[df_enc["Flight_ID"].astype(str) == str(selected_flight)].copy()
     
     if not df_flight_original.empty:
@@ -336,6 +359,7 @@ with st.sidebar:
             label_visibility="collapsed"
         )
         
+        # Indicador visual de cambio
         if adjusted_passenger_count != original_passenger_count:
             delta = adjusted_passenger_count - original_passenger_count
             delta_pct = (delta / original_passenger_count * 100)
@@ -362,27 +386,39 @@ with st.sidebar:
     st.markdown("### System Info")
     st.info(f"**Database:** {len(df_enc)} records\n\n**Flights:** {len(flight_options)}")
 
+# --------------------------------------------------------------
 # CONTENIDO PRINCIPAL
+# --------------------------------------------------------------
+
+# ⭐ APLICAR AJUSTE DE PASAJEROS ANTES DE FILTRAR ⭐
 df_enc_adjusted = df_enc.copy()
 
+# Verificar que tengamos un vuelo válido
 df_flight_check = df_enc[df_enc["Flight_ID"].astype(str) == str(selected_flight)].copy()
 
 if not df_flight_check.empty:
+    # Si hay ajuste de pasajeros, aplicarlo al dataset
     if adjusted_passenger_count != original_passenger_count:
+        # Modificar solo las filas del vuelo seleccionado
         mask = df_enc_adjusted["Flight_ID"].astype(str) == str(selected_flight)
         df_enc_adjusted.loc[mask, 'Passenger_Count'] = adjusted_passenger_count
+        
+        # Recalcular Qty_Per_Passenger con el nuevo valor
         df_enc_adjusted.loc[mask, 'Qty_Per_Passenger'] = (
             df_enc_adjusted.loc[mask, 'Standard_Specification_Qty'].fillna(0)
             .div(adjusted_passenger_count)
         )
 
+# Ahora sí filtrar el vuelo con los datos ajustados
 df_flight = df_enc_adjusted[df_enc_adjusted["Flight_ID"].astype(str) == str(selected_flight)].copy()
 
 if df_flight.empty:
-    st.warning("No se encontraron filas para el vuelo seleccionado.")
+    st.warning("⚠️ No se encontraron filas para el vuelo seleccionado.")
     st.stop()
 
+# --------------------------------------------------------------
 # CONTEXTO DEL VUELO CON DISEÑO MEJORADO
+# --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
 st.markdown("## Flight Context & Details")
 
@@ -390,6 +426,7 @@ row0 = df_flight.iloc[0]
 
 col1, col2, col3, col4, col5 = st.columns(5)
 
+# Estilo uniforme azul marino para todas las tarjetas
 card_style = """
     text-align: center; 
     padding: 1rem; 
@@ -512,14 +549,17 @@ with tab3:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
+# --------------------------------------------------------------
 # KPIs MEJORADOS CON GRÁFICOS
+# --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
-st.markdown("## 📉 Impact & Savings Dashboard")
+st.markdown("## Impact & Savings Dashboard")
 
 peso_total_ahorrado, combustible_ahorrado, ahorro_dinero = summarize_impacts(work)
 
 col1, col2, col3, col4 = st.columns(4)
 
+# Estilo uniforme azul marino para KPIs
 kpi_style = """
     text-align: center; 
     padding: 1.5rem; 
@@ -588,7 +628,9 @@ if not weight_dist.empty:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
+# --------------------------------------------------------------
 # TROLLEYS CON VISUALIZACIÓN MEJORADA
+# --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
 st.markdown("## Trolley Configuration & Loading Plan")
 
@@ -614,10 +656,10 @@ with col1:
             
             st.progress(
                 min(pct / 100, 1.0),
-                text=f"Trolley {i+1}: {pct:.1f}% loaded ({pct * TROLLEY_CAPACITY_KG / 100:.1f} kg)"
+                text=f"🧳 Trolley {i+1}: {pct:.1f}% loaded ({pct * TROLLEY_CAPACITY_KG / 100:.1f} kg)"
             )
     else:
-        st.info("No optimal weight calculated yet.")
+        st.info("ℹ️ No optimal weight calculated yet.")
 
 with col2:
     if num_trolleys > 0:
@@ -646,14 +688,16 @@ with col2:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
+# --------------------------------------------------------------
 # CHECKLIST + EXPORT MEJORADO
+# --------------------------------------------------------------
 st.markdown('<div class="section-container">', unsafe_allow_html=True)
 st.markdown("## Packing Checklist & Export")
 
 checklist_df = work[["Flight_ID", "Product_Name", "Optimal_Specification"]].copy().sort_values("Product_Name")
 
 if checklist_df.empty:
-    st.warning("No hay recomendaciones para mostrar.")
+    st.warning("⚠️ No hay recomendaciones para mostrar.")
 else:
     col1, col2 = st.columns([3, 1])
     
@@ -680,7 +724,9 @@ else:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
+# --------------------------------------------------------------
 # FOOTER
+# --------------------------------------------------------------
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; padding: 1rem; opacity: 0.7;">
